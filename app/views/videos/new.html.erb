@@ -1,0 +1,28 @@
+<div class="container text-center">
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="card col-md-8 px-0">
+      <div class="card-header">
+        Share a Youtube movie
+      </div>
+      <div class="card-body">
+        <%= form_with model: @video do |form| %>
+          <div class="mb-3 row">
+            <%= form.label :Youtube_URL, class: 'col-sm-2 col-form-label' %>
+            <div class="col-sm-10">
+              <%= form.text_field :url, class: 'form-control' %>
+            </div>
+          </div>
+
+          <div class='mb-3 row'>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-10 d-grid">
+              <%= form.submit 'Share', class: 'btn btn-primary' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-md-2"></div>
+  <div>
+</div>

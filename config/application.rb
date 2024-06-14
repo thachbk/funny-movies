@@ -38,5 +38,8 @@ module FunnyMovies
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.autoload_paths += Dir["#{config.root}/app/models/**"]
+    config.autoload_paths += Dir["#{config.root}/app/channels/application_cable/concerns"]
   end
 end
