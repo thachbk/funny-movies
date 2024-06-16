@@ -18,6 +18,8 @@ Doorkeeper.configure do
     User.authenticate(params[:email], params[:password])
   end
 
+  skip_client_authentication_for_password_grant :token_info
+
   # If you didn't skip applications controller from Doorkeeper routes in your application routes.rb
   # file then you need to declare this block in order to restrict access to the web interface for
   # adding oauth authorized applications. In other case it will return 403 Forbidden response

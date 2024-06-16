@@ -6,16 +6,17 @@ class Videos::FetchYtbInfoCmd < BaseCmd
   BASE_URL = ENV.fetch('YOUTUBE_API_URL', 'https://www.googleapis.com/youtube/v3/videos').freeze
 
   validates :youtube_url, ytb_url: true, presence: true
-  validates :youtube_id, presence: true
 
   def initialize(params:)
     super
     @youtube_url = params[:url]
-    @youtube_id = youtube_video_id
   end
 
   def call
     return if invalid?
+
+    @youtube_id = youtube_video_id
+    return unless youtube_id_valid?
 
     fetch_video_info
   end
@@ -23,6 +24,15 @@ class Videos::FetchYtbInfoCmd < BaseCmd
   private
 
   attr_reader :youtube_url, :youtube_id
+
+  def youtube_id_valid?
+    unless youtube_id
+      errors.add(:base, "Youtube ID can't be blank")
+      return false
+    end
+
+    true
+  end
 
   def youtube_video_id
     uri = URI.parse(youtube_url)

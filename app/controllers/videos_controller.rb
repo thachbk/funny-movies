@@ -16,8 +16,8 @@ class VideosController < ApplicationController
     if cmd.success?
       redirect_to :videos
     else
-      flash.now[:alert] = t(cmd.errors.full_messages.to_sentence)
-      redirect_to :new_video # , status: :unprocessable_entity
+      flash.now[:alert] = cmd.errors.full_messages.to_sentence
+      render :new, status: :unprocessable_entity
     end
   end
 

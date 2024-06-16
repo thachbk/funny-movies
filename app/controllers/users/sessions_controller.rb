@@ -8,14 +8,7 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
-    user = User.find_by(email: user_params[:email])
-    unless user
-      email_confirmation_required = ENV.fetch('EMAIL_CONFIRMATION_REQUIRED', 1).to_i.positive?
-      registered_user = User.new(user_params)
-      registered_user.skip_confirmation! unless email_confirmation_required
-      registered_user.save
-    end
-
+    RegisterUserCmd.call(params: user_params)
     super
   end
 

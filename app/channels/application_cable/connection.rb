@@ -13,6 +13,9 @@ module ApplicationCable
     private
 
     def find_verified_user
+      # TODO: Implement token verification
+      return 
+
       # cookies.encrypted['_session']['user_id']
       # request.params[:token]
       if (verified_user = User.find_by(id: cookies.encrypted[:user_id]))

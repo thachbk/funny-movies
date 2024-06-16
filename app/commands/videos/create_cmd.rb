@@ -19,11 +19,20 @@ class Videos::CreateCmd < BaseCmd
       return
     end
 
-    user.videos.create!(
+    video = user.videos.create!(
       title:       cmd.result[:title],
       description: cmd.result[:description],
       url:         params[:url]
     )
+
+    # Broadcast the new video to all subscribers
+    payload = {
+      title: video.title,
+      user_email:  user.email
+    }.as_json
+    WsNotificationJob.perform_async(WebSocketInfo::VIDEO_SHARING_TOPIC, payload)
+
+    video
   end
 
   private

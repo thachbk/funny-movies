@@ -3,7 +3,7 @@
 class VideoChannel < ApplicationCable::Channel
   def subscribed
     # stream_from "some_channel"
-    stream_from('video:new_sharing')
+    stream_from(WebSocketInfo::VIDEO_SHARING_TOPIC)
   end
 
   def unsubscribed

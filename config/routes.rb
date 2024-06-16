@@ -10,7 +10,10 @@ Rails.application.routes.draw do
       registrations: 'users/registrations'
     }
 
-  # use_doorkeeper
+  use_doorkeeper do
+    skip_controllers :authorizations, :applications, :authorized_applications
+    controllers tokens: 'api/oauth_tokens'
+  end
 
   resources :videos, only: %i[index new create]
 
@@ -20,8 +23,8 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # extend ApiRoutes  unless ENV['ATTACHED_API'].to_i.zero?
-  # extend SidekiqRoutes unless ENV['ATTACHED_SIDEKIQ'].to_i.zero?
+  extend ApiRoutes unless ENV['ATTACHED_API'].to_i.zero?
+  extend SidekiqRoutes unless ENV['ATTACHED_SIDEKIQ'].to_i.zero?
 
   # Defines the root path route ("/")
   root "videos#index"

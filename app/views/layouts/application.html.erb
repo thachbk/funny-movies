@@ -13,11 +13,39 @@
 
   <body>
     <%= render "shared/header" %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-
     <div class="container-fluid">
+      <div class="alert alert-info1" role="alert">
+        <%= notice %>
+      </div>
+      <div class="alert alert-warning1" role="alert">
+        <%= alert %>
+      </div>
+
       <%= yield %>
+    </div>
+
+    <div class="modal fade" id="shareRecipeModal" tabindex="-1" aria-labelledby="newItemRemoteModalLabel" aria-hidden="true" data-controller="modal" data-action="turbo:before-render@document->remote-modal#hideBeforeRender">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" id="modal_content">
+          <div class="modal-header">
+              <h4 class="modal-title" id="newItemRemoteModalLabel">New Sharing Video</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body remote_modal_body" id="remote_modal_body">
+            <div class="row">
+              <div class="col-sm-3" style='text-align: left; font-weight: bold'>Title</div>
+              <div class="col-sm-9">
+                <div style='text-align: left' id="videoTitleModal"></div>
+              </div>
+
+              <div class="col-sm-3" style='text-align: left; font-weight: bold'>Shared by</div>
+              <div class="col-sm-9">
+                <div style='text-align: left' id="videoOwnerModal"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
