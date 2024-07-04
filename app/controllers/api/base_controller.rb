@@ -7,10 +7,6 @@ class Api::BaseController < ActionController::API
 
   before_action :doorkeeper_authorize!
 
-  def render200
-    render json: json_with_success(message: 'OK'), status: :ok
-  end
-
   # using to response 404 status to client in case no route found
   def render404
     render json: json_with_error(message: I18n.t('errors.no_route_found')), status: :not_found

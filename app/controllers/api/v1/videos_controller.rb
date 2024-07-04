@@ -1,7 +1,9 @@
 class Api::V1::VideosController < Api::V1::BaseController
+  skip_before_action :doorkeeper_authorize!, only: [:index]
+
   def index
     videos = Video.includes(:user).order(created_at: :desc)
-    render json: json_with_success(data: videos, options: { serialize: { each_serializer: VideoSerializer } })
+    render json: json_with_success(data: videos, options: { serialize: { each_serializer: VideoSerializer, include_user: true } })
   end
 
   def create

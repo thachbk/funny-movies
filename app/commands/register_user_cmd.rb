@@ -19,6 +19,7 @@ class RegisterUserCmd < BaseCmd
     registered_user = User.find_for_authentication(email: email)
     unless registered_user
       email_confirmation_required = ENV.fetch('EMAIL_CONFIRMATION_REQUIRED', 1).to_i.positive?
+
       registered_user = User.new(email: email, password: password, password_confirmation: password_confirmation)
       registered_user.skip_confirmation! unless email_confirmation_required
 
@@ -28,6 +29,11 @@ class RegisterUserCmd < BaseCmd
       end
     end
 
+    unless registered_user.valid_password?(password)
+      errors.add(:email, 'Email has been taken')
+      return
+    end
+    
     registered_user
   end
 

@@ -6,6 +6,7 @@ class Videos::FetchYtbInfoCmd < BaseCmd
   BASE_URL = ENV.fetch('YOUTUBE_API_URL', 'https://www.googleapis.com/youtube/v3/videos').freeze
 
   validates :youtube_url, ytb_url: true, presence: true
+  validates :youtube_api_key, presence: true
 
   def initialize(params:)
     super
@@ -36,21 +37,9 @@ class Videos::FetchYtbInfoCmd < BaseCmd
 
   def youtube_video_id
     uri = URI.parse(youtube_url)
-    if uri.host.nil?
-      return nil # Not a valid URL
-    end
-
     if /(www\.)?youtube\.com/.match?(uri.host)
-      if uri.path == '/watch'
-        params = CGI.parse(uri.query)
-        return params['v'][0] if params['v']
-      elsif (match = uri.path.match(%r{/embed/(.+)}))
-        return match[1]
-      elsif (match = uri.path.match(%r{/v/(.+)})) # rubocop:disable Lint/DuplicateBranch
-        return match[1]
-      end
-    elsif uri.host.include?('youtu.be')
-      return uri.path[1..]
+      match = uri.path.match(%r{/embed/(.+)})
+      return match[1]
     end
 
     nil # Video ID not found
@@ -62,7 +51,7 @@ class Videos::FetchYtbInfoCmd < BaseCmd
     params = {
       id:   youtube_id,
       part: 'snippet',
-      key:  ENV.fetch('YOUTUBE_API_KEY', nil)
+      key:  youtube_api_key
     }
     response = HttpApiCallerHelper.http_get(params, BASE_URL)
 
@@ -77,5 +66,9 @@ class Videos::FetchYtbInfoCmd < BaseCmd
     end
 
     info
+  end
+
+  def youtube_api_key
+    ENV.fetch('YOUTUBE_API_KEY', nil)
   end
 end

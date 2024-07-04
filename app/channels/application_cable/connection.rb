@@ -13,20 +13,8 @@ module ApplicationCable
     private
 
     def find_verified_user
-      # TODO: Implement token verification
-      return 
-
-      # cookies.encrypted['_session']['user_id']
-      # request.params[:token]
-      if (verified_user = User.find_by(id: cookies.encrypted[:user_id]))
-        verified_user
-      else
-        reject_unauthorized_connection
-      end
-    end
-
-    def params
-      Rack::Utils.parse_nested_query(env['QUERY_STRING']).with_indifferent_access
+      # TODO: Implement token verification for mobile app here. For now, we will just ignore this check due to FE demo purpose.
+      return
     end
   end
 end

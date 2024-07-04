@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ErrorsHandler
+module ErrorsHandler # rubocop:disable Metrics/ModuleLength
   extend ActiveSupport::Concern
 
   class BadRequest < StandardError; end
@@ -120,7 +120,7 @@ module ErrorsHandler
     ), status: :internal_server_error
   end
 
-  def handle_missing_token
+  def handle_missing_token(exception)
     log_exception(exception)
 
     render json: json_with_error(
@@ -150,13 +150,5 @@ module ErrorsHandler
     render json: json_with_error(
       message: I18n.t('activerecord.errors.record_existed')
     ), status: :bad_request
-  end
-
-  def handle_access_denied(exception)
-    log_exception(exception)
-
-    render json: json_with_error(
-      message: exception.message
-    ), status: :forbidden
   end
 end

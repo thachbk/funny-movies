@@ -24,4 +24,8 @@ class ApplicationController < ActionController::Base
       format.json { render_404_json }
     end
   end
+
+  def render_404_json
+    render json: { error: '404 Page not found' }, status: 404
+  end
 end

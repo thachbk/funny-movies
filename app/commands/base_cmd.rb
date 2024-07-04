@@ -11,8 +11,4 @@ class BaseCmd
   private
 
   attr_reader :params
-
-  def validate
-    true
-  end
 end

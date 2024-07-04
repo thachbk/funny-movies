@@ -30,6 +30,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable
 
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :email, uniqueness: true
 
   has_many :access_tokens, # rubocop:disable Rails/InverseOf
            class_name:  'Doorkeeper::AccessToken',

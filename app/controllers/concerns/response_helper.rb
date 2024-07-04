@@ -24,35 +24,16 @@ module ResponseHelper
     }
   end
 
-  def json_with_success_without_serialize(message: :success, data: nil, options: {})
-    {
-      status:  SUCCESS_STATUS,
-      message: options[:message] || message || 'Success',
-      data:    data
-    }
-  end
-
   def json_with_error(message: :fail, errors: nil, error_code: nil)
     {
       status:     ERROR_STATUS,
-      message:    error_msg_active_record(errors) || message,
+      message:    message,
       errors:     errors,
       error_code: error_code
     }
   end
 
   private
-
-  def error_msg_active_record(errors)
-    # make sure errors come from activerecord error
-    return if errors.nil? || !errors.is_a?(Hash)
-
-    msg = errors&.first
-    return if msg.nil? || !msg.is_a?(Array)
-    return msg.last if msg && msg.size == 1
-
-    msg.last.first
-  end
 
   def pagination_json(data, custom_serializer: nil, options: {})
     pagination =

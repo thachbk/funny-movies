@@ -24,5 +24,45 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'associations' do
+    it { is_expected.to have_many(:access_tokens) }
+    it { is_expected.to have_many(:videos) }
+  end
+
+  describe 'validations' do
+    subject { create(:user) }
+
+    it { is_expected.to validate_presence_of(:email) }
+    it { is_expected.to validate_uniqueness_of(:email).ignoring_case_sensitivity }
+
+    it 'returns an error if email is incorrect format' do
+      user = build(:user, email: 'invalid_email')
+      user.valid?
+      expect(user.errors[:email]).to be_present
+    end
+
+    it 'returns valid if email is correct format' do
+      user = build(:user, email: 'valid@example.com')
+      user.valid?
+      expect(user.errors[:email]).to be_empty
+    end
+  end
+
+  describe 'class methods' do
+    describe '.authenticate' do
+      let(:user) { create(:user) }
+
+      it 'returns user if email and password are correct' do
+        expect(User.authenticate(user.email, user.password)).to eq(user)
+      end
+
+      it 'returns nil if email is incorrect' do
+        expect(User.authenticate('wrong_email', user.password)).to be_nil
+      end
+
+      it 'returns nil if password is incorrect' do
+        expect(User.authenticate(user.email, 'wrong_password')).to be_nil
+      end
+    end
+  end
 end
