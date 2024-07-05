@@ -1,3 +1,10 @@
+server '13.228.13.199', user: 'ubuntu', roles: %w[web app db]
+
+set :stage, 'staging'
+set :application, 'funny-movies-staging'
+set :branch, 'staging'
+set :deploy_to, "/var/proj/#{fetch(:application)}"
+
 # server-based syntax
 # ======================
 # Defines a single server with a list of roles and multiple properties.
@@ -59,10 +66,3 @@
 #     auth_methods: %w(publickey password)
 #     # password: "please use keys"
 #   }
-
-server '13.228.13.199', user: 'ubuntu', roles: %w[web app db]
-
-set :stage, 'staging'
-set :application, 'funny-movies-staging'
-set :branch, 'staging'
-set :deploy_to, "/var/proj/#{fetch(:application)}"

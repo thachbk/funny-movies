@@ -63,11 +63,11 @@ gem 'simple_command'
 gem 'versionist'
 gem 'active_model_serializers'
 gem 'will_paginate'
+gem 'dotenv-rails'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri windows]
-  gem 'dotenv-rails'
 
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'pry'
@@ -107,7 +107,6 @@ group :development do
   # for deployment
   gem 'capistrano'
   gem 'capistrano-rvm'
-  gem 'rvm1-capistrano3'
   gem 'capistrano-rails'
   gem 'capistrano-bundler'
   gem 'capistrano-sidekiq'

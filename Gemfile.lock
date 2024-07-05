@@ -398,9 +398,6 @@ GEM
     ruby-graphviz (1.2.5)
       rexml
     ruby-progressbar (1.13.0)
-    rvm1-capistrano3 (1.4.0)
-      capistrano (~> 3.0)
-      sshkit (>= 1.2)
     sexp_processor (4.17.1)
     shoulda-matchers (6.2.0)
       activesupport (>= 5.2.0)
@@ -526,7 +523,6 @@ DEPENDENCIES
   rubocop-rake
   rubocop-rspec
   rubocop-thread_safety
-  rvm1-capistrano3
   shoulda-matchers
   sidekiq
   simple_command
