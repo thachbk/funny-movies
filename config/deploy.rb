@@ -25,7 +25,20 @@ set :ssh_options, keys: [File.join(ENV['HOME'], '.ssh', 'dropfoods', 'aws', 'new
 
 set :sidekiq_config, -> { release_path.join('config', 'sidekiq.yml') }
 
+namespace :node do
+  desc 'Set Node version'
+  task :set_version do
+    on roles(:app) do
+      within release_path do
+        execute :bash, '-lc', "'nvm install 18.20.3; nvm use v18.20.3'"
+      end
+    end
+  end
+end
+
 namespace :deploy do
+  before 'deploy:restart', 'node:set_version'
+
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
