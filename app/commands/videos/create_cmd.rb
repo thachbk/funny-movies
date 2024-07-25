@@ -27,8 +27,8 @@ class Videos::CreateCmd < BaseCmd
 
     # Broadcast the new video to all subscribers
     payload = {
-      title: video.title,
-      user_email:  user.email
+      title:      video.title,
+      user_email: user.email
     }.as_json
     WsNotificationJob.perform_async(WebSocketInfo::VIDEO_SHARING_TOPIC, payload)
 

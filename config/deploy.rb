@@ -15,6 +15,9 @@ set :pty, false
 set :linked_files, %w[config/database.yml public/robots.txt .env]
 set :linked_dirs, %w[public/assets log certs]
 
+append :linked_dirs, '.bundle'
+set :bundle_binstubs, -> { shared_path.join('bin') }
+
 set :rvm_type, :system
 set :keep_releases, 5
 
@@ -25,20 +28,35 @@ set :ssh_options, keys: [File.join(ENV['HOME'], '.ssh', 'dropfoods', 'aws', 'new
 
 set :sidekiq_config, -> { release_path.join('config', 'sidekiq.yml') }
 
-namespace :node do
-  desc 'Set Node version'
-  task :set_version do
-    on roles(:app) do
-      within release_path do
-        execute :bash, '-lc', "'nvm install 18.20.3; nvm use v18.20.3'"
-      end
-    end
-  end
-end
+set :nvm_type, :user # or :system|:user, depends on your nvm setup
+set :nvm_node, 'v22.4.0'
+set :nvm_map_bins, %w{node npm yarn}
+
+# namespace :nvm do
+#   task :load do
+#     on roles(:app) do
+#       execute :echo, "Loading NVM"
+#       execute "source ~/.nvm/nvm.sh && nvm install #{fetch(:nvm_node)} && nvm use #{fetch(:nvm_node)} && yarn install"
+#       # yarn install
+#       # export PATH=$(dirname $(nvm which current)):$PATH
+#     end
+#   end
+# end
+# before 'deploy:assets:precompile', 'nvm:load'
+
+# namespace :node do
+#   desc 'Set Node version'
+#   task :set_version do
+#     on roles(:app) do
+#       within release_path do
+#         execute :bash, '-lc', "'nvm install 18.20.3; nvm use v18.20.3'"
+#       end
+#     end
+#   end
+# end
+# before 'deploy:assets:precompile', 'node:set_version'
 
 namespace :deploy do
-  before 'deploy:restart', 'node:set_version'
-
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do

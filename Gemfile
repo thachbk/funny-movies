@@ -110,6 +110,7 @@ group :development do
   gem 'capistrano-rails'
   gem 'capistrano-bundler'
   gem 'capistrano-sidekiq'
+  gem 'capistrano-nvm', require: false
 
   # for code quality
   gem 'rails_best_practices'

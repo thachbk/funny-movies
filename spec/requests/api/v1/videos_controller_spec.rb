@@ -63,7 +63,6 @@ RSpec.describe 'api/v1/videos' do
         before do
           fetch_ytb_info_cmd_instance = instance_double(Videos::FetchYtbInfoCmd)
           allow(Videos::FetchYtbInfoCmd).to receive(:call).and_return(fetch_ytb_info_cmd_instance)
-          # allow(fetch_ytb_info_cmd_instance).to receive(:success?).and_return(true)
           allow(fetch_ytb_info_cmd_instance).to receive_messages(success?: true, result: {
             title:       video_data.title,
             description: video_data.description,

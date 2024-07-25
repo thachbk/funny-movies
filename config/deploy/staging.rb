@@ -1,4 +1,4 @@
-server '13.228.13.199', user: 'ubuntu', roles: %w[web app db]
+server 'ec2-18-140-130-245.ap-southeast-1.compute.amazonaws.com', user: 'ubuntu', roles: %w[web app db]
 
 set :stage, 'staging'
 set :application, 'funny-movies-staging'

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class BaseCmd
-  # prepend SimpleCommand
   include ActiveModel::Validations
 
   def initialize(params:)

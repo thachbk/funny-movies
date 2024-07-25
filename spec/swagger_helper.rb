@@ -63,16 +63,16 @@ RSpec.configure do |config|
   # the root example_group in your specs, e.g. describe '...', openapi_spec: 'v2/swagger.json'
   config.openapi_specs = {
     'v1/swagger.yaml' => {
-      openapi: '3.0.1',
-      info: {
-        title: 'API V1',
-        version: 'v1',
+      openapi:    '3.0.1',
+      info:       {
+        title:       'API V1',
+        version:     'v1',
         description: api_docs_description,
-        'x-logo': {
+        'x-logo':    {
           url: 'https://example.com/logo.png'
         }
       },
-      paths: {},
+      paths:      {},
       components: {
         securitySchemes: {
           bearerAuth:  {
@@ -165,7 +165,7 @@ RSpec.configure do |config|
           }
         },
         schemas:         {
-          meta:                           {
+          meta:               {
             type:                 :object,
             properties:           {
               status:  { type: :string },
@@ -179,7 +179,7 @@ RSpec.configure do |config|
             description:          'Meta response',
             additionalProperties: false
           },
-          error:                          {
+          error:              {
             type:                 :object,
             properties:           {
               status:     { type: :string },
@@ -195,7 +195,7 @@ RSpec.configure do |config|
             description:          'Error response',
             additionalProperties: false
           },
-          pagination:                     {
+          pagination:         {
             type:                 :object,
             properties:           {
               current_page: { type: :integer },
@@ -215,7 +215,7 @@ RSpec.configure do |config|
             description:          'Pagination response',
             additionalProperties: false
           },
-          success:                        {
+          success:            {
             type:                 :object,
             properties:           {
               status:  { type: :string },
@@ -231,7 +231,7 @@ RSpec.configure do |config|
             description:          'Success response',
             additionalProperties: false
           },
-          success_array:                  {
+          success_array:      {
             type:                 :object,
             properties:           {
               status:  { type: :string },
@@ -247,7 +247,7 @@ RSpec.configure do |config|
             description:          'Success response',
             additionalProperties: false
           },
-          success_pagination:             {
+          success_pagination: {
             type:                 :object,
             properties:           {
               status:  { type: :string },
@@ -271,24 +271,24 @@ RSpec.configure do |config|
             description:          'Success response',
             additionalProperties: false
           },
-          video: {
-            type: 'object',
+          video:              {
+            type:       'object',
             properties: {
-              id: { type: 'integer' },
-              title: { type: 'string' },
+              id:          { type: 'integer' },
+              title:       { type: 'string' },
               description: { type: 'string', nullable: true },
-              url: { type: 'string' },
-              created_at: { type: 'string', nullable: true },
+              url:         { type: 'string' },
+              created_at:  { type: 'string', nullable: true },
             },
-            required: %w[id title url]
+            required:   %w[id title url]
           },
-          user: {
-            type: 'object',
+          user:               {
+            type:       'object',
             properties: {
-              id: { type: 'integer' },
+              id:    { type: 'integer' },
               email: { type: 'string' }
             },
-            required: %w[id email]
+            required:   %w[id email]
           }
         }
       },
@@ -322,4 +322,3 @@ RSpec.configure do |config|
   # To keep your responses clean and validate against a strict schema definition
   config.openapi_strict_schema_validation = true
 end
-
